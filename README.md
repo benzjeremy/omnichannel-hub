@@ -1,10 +1,16 @@
 # 🌐 omnichannel-hub
 
-[![Release](https://img.shields.io/badge/Release-v1.0-6366f1.svg)](https://github.com/benzjeremy/omnichannel-hub/releases)
+[![Release](https://img.shields.io/badge/Release-v1.0%20[Pre--Release]-6366f1.svg)](https://github.com/benzjeremy/omnichannel-hub/releases)
+[![Status: Pre-Release](https://img.shields.io/badge/Status-Pre--Release%20%2F%20WIP-orange.svg)](https://github.com/benzjeremy/omnichannel-hub)
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://github.com/benzjeremy/omnichannel-hub/blob/main/LICENSE)
 [![Go: 1.22](https://img.shields.io/badge/Go-1.22-00ADD8.svg)](https://golang.org)
 [![Security: Zero-Dummy](https://img.shields.io/badge/Security-Zero--Dummy--Standard-10b981.svg)](https://benzjeremy.github.io/omnichannel-hub/)
 [![Isolation: Localhost](https://img.shields.io/badge/Isolation-127.0.0.1%20Only-38bdf8.svg)](https://benzjeremy.github.io/)
+
+> [!IMPORTANT]
+> ### 🚧 Pre-Release / Active Development Notice
+> **This software is not yet finished and is actively being worked on.**  
+> All releases, builds, and versions are **Pre-Releases** (Work in Progress), even if originally tagged without a pre-release flag. Unified broker integrations, security pipelines, and protocols are under active ongoing development.
 
 > **Unified Messaging Hub & Self-Hosted Communication Broker in Go 1.22**  
 > Centralized, self-hosted communication router bundling Email (IMAP/SMTP TLS), WhatsApp, and Discord with zero cloud relays and hardened AES-256-GCM encryption.
