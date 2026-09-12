@@ -7,30 +7,30 @@
 [![Isolation: Localhost](https://img.shields.io/badge/Isolation-127.0.0.1%20Only-38bdf8.svg)](https://benzjeremy.github.io/)
 
 > **Unified Messaging Hub & Self-Hosted Communication Broker in Go 1.22**  
-> Zentraler, selbstgehosteter Nachrichten-Knotenpunkt zur Bündelung von E-Mail (IMAP/SMTP TLS), WhatsApp und Discord mit Zero Cloud Relays und militärisch gehärteter AES-256-GCM Verschlüsselung.
+> Centralized, self-hosted communication router bundling Email (IMAP/SMTP TLS), WhatsApp, and Discord with zero cloud relays and hardened AES-256-GCM encryption.
 
 ---
 
-## ⚡ Warum omnichannel-hub?
+## ⚡ Why omnichannel-hub?
 
-Kommunikationskanäle wie E-Mail, WhatsApp und Discord sind fragmentiert. Herkömmliche Multi-Messenger-Lösungen basieren oft auf ressourcenhungrigen Electron-Instanzen mit Dutzenden eingebetteten Iframes oder leiten sensible Nachrichten über Drittanbieter-Cloud-Server um.
+Modern communication channels like Email, WhatsApp, and Discord are heavily fragmented. Traditional multi-messenger solutions rely on resource-hungry Electron instances containing dozens of embedded iframes, or route private messages through third-party cloud infrastructure.
 
-`omnichannel-hub` bietet eine radikal schlanke, sichere Alternative:
-1. **Zero Cloud Relays:** Keine Speicherung auf Drittanbieter-Servern. Alle Nachrichten und Credentials liegen verschlüsselt auf dem eigenen System.
-2. **Unified Message Broker:** Entkoppelte Architektur mit Go-Channels zur Aggregation und Weiterleitung von Nachrichten in Echtzeit.
-3. **Plattformübergreifend:** Einheitliche Abstraktionsschicht für E-Mail (IMAP/SMTP), Discord Bot Gateway und WhatsApp Web Bridge.
-4. **Ressourceneffizient:** Minimaler Speicher-Footprint (< 30 MB RAM) in purem Go ohne CGO-Zwang.
-5. **Echte Sicherheit (Zero-Dummy-Security):** AES-256-GCM Vault mit PBKDF2 (100.000 Runden), 32-Byte Tokens, Anti-DNS-Rebinding und Anti-CSRF Schutz.
+`omnichannel-hub` offers a radically lightweight, secure alternative:
+1. **Zero Cloud Relays:** No storage on third-party cloud servers. All messages and credentials reside encrypted on your own machine.
+2. **Unified Message Broker:** Decoupled architecture utilizing Go channels for real-time aggregation and dispatching.
+3. **Cross-Platform:** Unified abstraction layer for Email (IMAP/SMTP), Discord Bot Gateway, and WhatsApp Web Bridge.
+4. **Resource-Efficient:** Minimal memory footprint (< 30 MB RAM) written in pure Go without forced CGO dependencies.
+5. **Zero-Dummy-Security:** AES-256-GCM vault with PBKDF2 (100,000 rounds), 32-byte tokens, anti-DNS-rebinding, and anti-CSRF protection.
 
 ---
 
-## 🛡️ Echte Sicherheit aus dem Effeff (Zero-Dummy-Security)
+## 🛡️ Zero-Dummy-Security (Production-Hardened by Default)
 
-- **AES-256-GCM Verschlüsselung:** Alle gespeicherten Nachrichten, Konten und sensitive Passwörter/Tokens werden in `hub_vault.enc` kryptografisch geschützt.
-- **PBKDF2 Key Derivation:** Mindestens **100.000 Iterationen** mit SHA-256 und 32-Byte kryptografischem Zufallssalt.
-- **Strict Localhost Isolation:** Bindung ausschließlich an `127.0.0.1:8082`. Keine Exposition im Netzwerk ohne expliziten Reverse Proxy.
-- **Kryptografische Authentifizierung:** Jeder API-Aufruf erfordert ein 32-Byte CSPRNG Token (`X-Hub-Token`).
-- **Anti-DNS-Rebinding & Anti-CSRF:** Strikte Validierung des `Host`- und `Origin`-Headers.
+- **AES-256-GCM Encryption:** All stored messages, accounts, and credentials/tokens are cryptographically protected in `hub_vault.enc`.
+- **PBKDF2 Key Derivation:** At least **100,000 iterations** with SHA-256 and a 32-byte cryptographic random salt.
+- **Strict Localhost Isolation:** Binds strictly to `127.0.0.1:8082`. No exposure to external networks without an explicit reverse proxy.
+- **Cryptographic Token Authentication:** Every API request requires a 32-byte CSPRNG token (`X-Hub-Token`).
+- **Anti-DNS-Rebinding & Anti-CSRF:** Strict validation of `Host` and `Origin` headers.
 
 ---
 
@@ -49,11 +49,11 @@ omnichannel-hub --email-address benzjeremy@pm.me
 ```
 
 ### Windows (x86_64):
-Entpacke `omnichannel-hub-v1.0-windows.zip` und starte `omnichannel-hub.exe`.
+Extract `omnichannel-hub-v1.0-windows.zip` and run `omnichannel-hub.exe`.
 
 ---
 
-## 🚀 CLI-Flags
+## 🚀 CLI Flags
 
 ```text
 Usage of omnichannel-hub:
@@ -68,31 +68,31 @@ Usage of omnichannel-hub:
 
 ---
 
-## 🌐 REST API Endpunkte
+## 🌐 REST API Endpoints
 
-Alle Endpunkte (außer `/health`) erfordern den Header `X-Hub-Token: <token>`.
+All endpoints (except `/health`) require the header `X-Hub-Token: <token>`.
 
-| Methode | Pfad | Beschreibung |
+| Method | Path | Description |
 |---|---|---|
-| `GET` | `/health` | Service-Status, Versionsinfo und aktive Kanäle |
-| `GET` | `/messages` | Abruf aller Nachrichten (Filter: `channel`, `direction`, `unread`, `limit`) |
-| `POST` | `/messages/send` | Nachricht über einen beliebigen Kanal versenden (`email`, `whatsapp`, `discord`) |
-| `POST` | `/messages/read` | Nachricht anhand ihrer ID als gelesen markieren |
-| `GET` | `/channels` | Übersicht aller registrierten Kanäle und Account-Konfigurationen |
-| `POST` | `/channels` | Neues Kommunikationskonto anlegen oder aktualisieren |
-| `GET` | `/stats` | Live-Zähler für ein- und ausgehende Nachrichten pro Kanal |
+| `GET` | `/health` | Service status, version info, and active channel states |
+| `GET` | `/messages` | Retrieve messages (Filters: `channel`, `direction`, `unread`, `limit`) |
+| `POST` | `/messages/send` | Send message via selected channel (`email`, `whatsapp`, `discord`) |
+| `POST` | `/messages/read` | Mark message as read by ID |
+| `GET` | `/channels` | Overview of registered channels and account configurations |
+| `POST` | `/channels` | Register or update communication account credentials |
+| `GET` | `/stats` | Live counters for inbound and outbound messages per channel |
 
 ---
 
-## 👥 Mitwirkende & Credits
+## 👥 Contributors & Credits
 
-- **Jeremy Benz** ([@benzjeremy](https://github.com/benzjeremy) & [@jbenz1706](https://github.com/jbenz1706)) – Projektgründer & Lead Developer
-- **AI-Assistenten (Pair Programming):** Google Antigravity & Claude Code
+- **Jeremy Benz** ([@benzjeremy](https://github.com/benzjeremy) & [@jbenz1706](https://github.com/jbenz1706)) – Project Founder & Lead Developer
+- **AI Assistants (Pair Programming):** Google Antigravity & Claude Code
 - © 2026 Jeremy Benz
 
 ---
 
-## 📄 Lizenz
+## 📄 License
 
-Dieses Projekt steht unter der **GNU General Public License, Version 3 (GPL-3.0)**.  
-Weitere Informationen: [Offizielle Lizenz (GPL-3.0)](https://github.com/benzjeremy/omnichannel-hub/blob/main/LICENSE)
+This project is licensed under the **GNU General Public License, Version 3 (GPL-3.0)**.  
+See [LICENSE](LICENSE) for details.
